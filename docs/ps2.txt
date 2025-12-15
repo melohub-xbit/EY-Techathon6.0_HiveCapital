@@ -1,0 +1,55 @@
+Challenge II: Banking, Financial Services, and Insurance (BFSI) Hive Capital 
+About the business: A large-scale Non-Banking Financial Company (NBFC) with a presence across 
+India offers personal loans, home loans, auto loans and more. To increase revenue from exis ng 
+customers, the NBFC aims to sell personal loans to prosects and its exis ng customers through a 
+web-based chatbot interface. 
+The chatbot will serve as a digital sales assistant, where a Master Agent (Agen c AI 
+Controller) coordinates mul ple Worker AI agents to handle the end-to-end loan sales process — 
+from conversa on and verifica on to credit evalua on, and approval and genera ng a sanc on 
+le er. 
+Problem statement: The NBFC wants to improve its sales success rate for personal loans by using an 
+AI-driven conversa onal approach. The solu on must simulate a human-like sales process, where 
+the Master Agent handles customer conversa ons, engages customers in a personalized manner and 
+collaborates with mul ple Worker AI agents to complete the loan process. 
+Goal: Teams must design an Agen c AI solu on where the Master Agent: 
+1. Chats with customers landing on the web chatbot via digital ads or marke ng emails 
+2. Understands the customer's needs and convinces them to take a personal loan 
+3. Orchestrates mul ple Worker AI agents to complete all tasks—verifica on, underwri ng and 
+sanc on le er genera on—before closing the chat. 
+Key deliverable: A 5-slides PPT showcasing the end-to-end journey from the ini al chat to sanc on 
+le er genera on. 
+Agen c AI roles 
+1. Master Agent (main orchestrator): 
+o Manages the conversa on flow with the customer 
+o Hands over tasks to Worker Agents and coordinates the workflow 
+o Starts and ends the conversa on 
+2. Worker Agents: 
+o Sales Agent: Nego ates loan terms, discusses customer needs, amount, tenure and 
+interest rates 
+o Verifica on Agent: Confirms KYC details (phone, address) from a dummy CRM 
+server 
+o Underwri ng Agent:  
+§ Fetches a dummy credit score (out of 900) from a mock credit bureau API 
+§ Validates eligibility:  
+§ If the loan amount ≤ pre-approved limit, approve instantly 
+§ If ≤ 2× pre-approved limit, request a salary slip upload. Approve only 
+if expected EMI ≤ 50% of salary 
+§ Reject if > 2× pre-approved limit or credit score < 700 
+o Sanc on Le er Generator: Generates an automated PDF sanc on le er if all 
+condi ons are met 
+Data and system assump ons 
+• Synthe c customer data: Teams must create dummy data for at least 10 customers with 
+details like name, age, city, current loan details, credit score and pre-approved personal loan 
+limit 
+• Offer mart server: A mock server or API hos ng pre-approved loan offers 
+• CRM server: Dummy customer KYC data 
+• Credit bureau API: Mock API to fetch credit scores 
+• File upload: Simulated salary slip upload (dummy PDF or image) 
+• Teams may make any reasonable assump ons as long as the solu on feels realis c 
+Submission format 
+• 5 Slider PPT 
+Tips for par cipants 
+• Keep the chatbot conversa onal and persuasive, just like a human sales execu ve 
+• Focus on orchestra on logic—how the Master Agent decides which Worker Agent to trigger 
+• Demonstrate edge cases (e.g., loan rejec on or the need for addi onal salary slip 
+verifica on) 

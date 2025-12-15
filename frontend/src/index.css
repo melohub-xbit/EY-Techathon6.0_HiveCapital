@@ -1,0 +1,437 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+@config "../tailwind.config.js";
+
+/* ===================================
+   🌿 EMERALD & GOLD - Premium Theme
+   =================================== */
+
+@layer base {
+  :root {
+    /* === COLOR PALETTE === */
+
+    /* Primary - Emerald */
+    --emerald-50: 236 253 245;
+    --emerald-100: 209 250 229;
+    --emerald-200: 167 243 208;
+    --emerald-300: 110 231 183;
+    --emerald-400: 52 211 153;
+    --emerald-500: 16 185 129;
+    --emerald-600: 5 150 105;
+    --emerald-700: 4 120 87;
+    --emerald-800: 6 95 70;
+    --emerald-900: 6 78 59;
+
+    /* Accent - Gold */
+    --gold-50: 255 251 235;
+    --gold-100: 254 243 199;
+    --gold-200: 253 230 138;
+    --gold-300: 252 211 77;
+    --gold-400: 251 191 36;
+    --gold-500: 245 158 11;
+    --gold-600: 217 119 6;
+    --gold-700: 180 83 9;
+    --gold-800: 146 64 14;
+    --gold-900: 120 53 15;
+
+    /* === SEMANTIC TOKENS - LIGHT MODE === */
+    --background: 250 250 249;
+    --foreground: 23 23 23;
+
+    --card: 255 255 255;
+    --card-foreground: 23 23 23;
+
+    --popover: 255 255 255;
+    --popover-foreground: 23 23 23;
+
+    --primary: 16 185 129;
+    --primary-foreground: 255 255 255;
+
+    --secondary: 245 245 244;
+    --secondary-foreground: 41 37 36;
+
+    --accent: 245 158 11;
+    --accent-foreground: 255 255 255;
+
+    --muted: 245 245 244;
+    --muted-foreground: 115 115 115;
+
+    --destructive: 244 63 94;
+    --destructive-foreground: 255 255 255;
+
+    --success: 34 197 94;
+    --success-foreground: 255 255 255;
+
+    --warning: 251 191 36;
+    --warning-foreground: 23 23 23;
+
+    --border: 229 229 229;
+    --input: 229 229 229;
+    --ring: 16 185 129;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* === SEMANTIC TOKENS - DARK MODE === */
+    --background: 10 15 13;
+    --foreground: 250 250 249;
+
+    --card: 15 26 20;
+    --card-foreground: 250 250 249;
+
+    --popover: 15 26 20;
+    --popover-foreground: 250 250 249;
+
+    --primary: 52 211 153;
+    --primary-foreground: 6 78 59;
+
+    --secondary: 23 37 30;
+    --secondary-foreground: 250 250 249;
+
+    --accent: 251 191 36;
+    --accent-foreground: 23 23 23;
+
+    --muted: 23 37 30;
+    --muted-foreground: 163 163 163;
+
+    --destructive: 244 63 94;
+    --destructive-foreground: 255 255 255;
+
+    --success: 34 197 94;
+    --success-foreground: 255 255 255;
+
+    --warning: 251 191 36;
+    --warning-foreground: 23 23 23;
+
+    --border: 38 62 50;
+    --input: 38 62 50;
+    --ring: 52 211 153;
+  }
+}
+
+/* === BASE STYLES === */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Ensure all buttons show pointer cursor */
+  button,
+  [role="button"],
+  .btn,
+  a {
+    cursor: pointer;
+  }
+
+  ::selection {
+    @apply bg-primary/30 text-foreground;
+  }
+}
+
+/* === CUSTOM UTILITIES === */
+@layer utilities {
+
+  /* Glassmorphism */
+  .glass {
+    @apply backdrop-blur-xl bg-white/10 border border-white/20;
+  }
+
+  .glass-dark {
+    @apply backdrop-blur-xl bg-black/20 border border-white/10;
+  }
+
+  .glass-emerald {
+    @apply backdrop-blur-xl border border-emerald-500/20;
+    background: rgba(16, 185, 129, 0.08);
+  }
+
+  /* Gradients */
+  .gradient-emerald {
+    @apply bg-gradient-to-r from-emerald-500 to-emerald-600;
+  }
+
+  .gradient-gold {
+    @apply bg-gradient-to-r from-gold-400 to-gold-500;
+  }
+
+  .gradient-emerald-gold {
+    @apply bg-gradient-to-r from-emerald-500 via-emerald-400 to-gold-400;
+  }
+
+  .gradient-radial-emerald {
+    background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+  }
+
+  /* Text Gradients */
+  .text-gradient-emerald {
+    @apply bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-gold-400 to-gold-600 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-emerald-gold {
+    @apply bg-gradient-to-r from-emerald-400 via-gold-400 to-gold-500 bg-clip-text text-transparent;
+  }
+
+  /* Glow Effects */
+  .glow-emerald {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), 0 0 40px rgba(16, 185, 129, 0.1);
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.3), 0 0 40px rgba(245, 158, 11, 0.1);
+  }
+
+  .glow-emerald-lg {
+    box-shadow: 0 0 40px rgba(16, 185, 129, 0.4), 0 0 80px rgba(16, 185, 129, 0.2);
+  }
+
+  /* Hover Glow */
+  .hover-glow-emerald {
+    @apply transition-shadow duration-300;
+  }
+
+  .hover-glow-emerald:hover {
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+  }
+
+  .hover-glow-gold {
+    @apply transition-shadow duration-300;
+  }
+
+  .hover-glow-gold:hover {
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+  }
+
+  /* Card Styles */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .card-hover:hover {
+    @apply -translate-y-1 shadow-2xl;
+  }
+
+  /* Animated Background Mesh */
+  .mesh-gradient {
+    background:
+      radial-gradient(at 40% 20%, rgba(16, 185, 129, 0.3) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(245, 158, 11, 0.2) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(52, 211, 153, 0.2) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, rgba(217, 119, 6, 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.2) 0px, transparent 50%),
+      radial-gradient(at 80% 100%, rgba(245, 158, 11, 0.15) 0px, transparent 50%);
+  }
+
+  /* Scrollbar Styles */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--emerald-600)) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgb(var(--emerald-600));
+    border-radius: 3px;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* === ANIMATIONS === */
+@layer utilities {
+
+  /* Float Animation */
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Pulse Glow */
+  @keyframes pulse-glow {
+
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    }
+
+    50% {
+      box-shadow: 0 0 40px rgba(16, 185, 129, 0.5), 0 0 60px rgba(16, 185, 129, 0.2);
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Shimmer */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Gradient Flow */
+  @keyframes gradient-flow {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-flow 8s ease infinite;
+  }
+
+  /* Fade In Up */
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  /* Spin Slow */
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+  }
+}
+
+/* === THEME COLOR CLASSES === */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  /* Map CSS vars to Tailwind */
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-card: rgb(var(--card));
+  --color-card-foreground: rgb(var(--card-foreground));
+  --color-popover: rgb(var(--popover));
+  --color-popover-foreground: rgb(var(--popover-foreground));
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-secondary: rgb(var(--secondary));
+  --color-secondary-foreground: rgb(var(--secondary-foreground));
+  --color-accent: rgb(var(--accent));
+  --color-accent-foreground: rgb(var(--accent-foreground));
+  --color-muted: rgb(var(--muted));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+  --color-destructive: rgb(var(--destructive));
+  --color-destructive-foreground: rgb(var(--destructive-foreground));
+  --color-success: rgb(var(--success));
+  --color-success-foreground: rgb(var(--success-foreground));
+  --color-warning: rgb(var(--warning));
+  --color-warning-foreground: rgb(var(--warning-foreground));
+  --color-border: rgb(var(--border));
+  --color-input: rgb(var(--input));
+  --color-ring: rgb(var(--ring));
+
+  /* Emerald palette */
+  --color-emerald-50: rgb(var(--emerald-50));
+  --color-emerald-100: rgb(var(--emerald-100));
+  --color-emerald-200: rgb(var(--emerald-200));
+  --color-emerald-300: rgb(var(--emerald-300));
+  --color-emerald-400: rgb(var(--emerald-400));
+  --color-emerald-500: rgb(var(--emerald-500));
+  --color-emerald-600: rgb(var(--emerald-600));
+  --color-emerald-700: rgb(var(--emerald-700));
+  --color-emerald-800: rgb(var(--emerald-800));
+  --color-emerald-900: rgb(var(--emerald-900));
+
+  /* Gold palette */
+  --color-gold-50: rgb(var(--gold-50));
+  --color-gold-100: rgb(var(--gold-100));
+  --color-gold-200: rgb(var(--gold-200));
+  --color-gold-300: rgb(var(--gold-300));
+  --color-gold-400: rgb(var(--gold-400));
+  --color-gold-500: rgb(var(--gold-500));
+  --color-gold-600: rgb(var(--gold-600));
+  --color-gold-700: rgb(var(--gold-700));
+  --color-gold-800: rgb(var(--gold-800));
+  --color-gold-900: rgb(var(--gold-900));
+}

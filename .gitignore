@@ -1,0 +1,6 @@
+.venv/
+.env
+__pycache__/
+.qodo/
+static/
+session_store.json

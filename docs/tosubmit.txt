@@ -1,0 +1,55 @@
+Slide 1
+Executive Summary (minimum 200 words)
+
+Slide 2
+Problem statement - Your understanding 
+Define the exact problem that you intend to solve and your understanding of the same. Share the below details:
+Target Industry: <<Industry Name>>
+Industry Type: <<B2B/B2C>>
+User Group: <<User Group Name>>
+User Department: <<Department Name>>
+Solution Scenario: <<Solution Scenario describing the user flow in the proposed solution>>
+Proposed Data Flow: <<Describing how the Data will be captured and flow between events>>
+Nature of Output: << Whether it will be a mobile app, web app or any other user interface>>
+
+Slide 3
+Explain, in brief, how you intend to solve the problem at hand. Preferably include the following (Methodology/approach):
+Please elaborate on the solution value proposition to the target user group. How will your solution cover the problem areas?
+Response: <<>>
+
+What are the impact metrics that you propose to use to analyse the effect of the solution?
+Response: <<>>
+
+What are the technologies (languages, platforms, APIs, hardware, sponsored tools, technologies stacks, framework etc.) involved?
+Response: <<>>
+
+Please state the assumptions, constraints and solution decision points (Reason behind choosing a technology)
+Response: <<>>
+
+How easily can your solution be implemented and how effective will it be?
+Response: <<>>
+
+How robust / secure / easily scalable and extensible is the solution?
+Response: <<>>
+
+What are the solution components that you would like to build and demonstrate; if you progress through next round.
+Response: <<>>
+
+Slide 4:
+Attach and submit the below as separate files or separate slides
+Architecture diagram (mandatory) team to add a slide
+
+Flow chart (mandatory) team to add a slide
+
+Wireframes (mandatory) team to share as a screenshot as a separate slide or as a separate pdf file
+
+Graphical representation (bar graph, histogram, pie charts, heat maps) (optional)
+
+Analysis, visualization (optional)
+
+Code Repository (optional)
+
+
+Slide 5
+[Attach Video, link for demo] or [output/visualizations from the prototype]
+Working prototype/output – please add Screenshot or video clip of your prototype here
