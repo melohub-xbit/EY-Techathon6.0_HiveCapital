@@ -10,12 +10,13 @@ import {
     Sparkles
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 // Animated gradient background component
 const AnimatedBackground = () => (
     <div className="fixed inset-0 -z-10 overflow-hidden">
-        {/* Base dark gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0A0F0D] via-[#0F1A14] to-[#0A0F0D]" />
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-background transition-colors duration-300" />
 
         {/* Animated mesh gradients */}
         <div className="absolute inset-0 opacity-60">
@@ -53,11 +54,11 @@ const AnimatedBackground = () => (
 
         {/* Subtle grid overlay */}
         <div
-            className="absolute inset-0 opacity-[0.03]"
             style={{
-                backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+                backgroundImage: `linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)`,
                 backgroundSize: '50px 50px'
             }}
+            className="absolute inset-0 opacity-[0.03] text-foreground"
         />
     </div>
 );
@@ -78,8 +79,8 @@ const PremiumButton = ({
 
     const variants = {
         primary: "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white hover:from-emerald-400 hover:to-emerald-500 glow-emerald hover:glow-emerald-lg active:scale-95",
-        secondary: "bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:border-emerald-400/50 active:scale-95",
-        ghost: "text-white/80 hover:text-white hover:bg-white/5 active:scale-95"
+        secondary: "bg-secondary backdrop-blur-md border border-border text-foreground hover:bg-muted hover:border-emerald-500/50 active:scale-95",
+        ghost: "text-muted-foreground hover:text-foreground hover:bg-muted active:scale-95"
     };
 
     return (
@@ -135,18 +136,18 @@ const FeatureCard = ({
             </div>
 
             {/* Content */}
-            <h3 className="relative text-xl font-bold text-white mb-3 group-hover:text-emerald-300 transition-colors">
+            <h3 className="relative text-xl font-bold text-foreground mb-3 group-hover:text-emerald-500 transition-colors">
                 {title}
             </h3>
-            <p className="relative text-white/60 leading-relaxed">
+            <p className="relative text-muted-foreground leading-relaxed">
                 {description}
             </p>
 
             {/* Extra content for larger cards */}
             {(size === "tall" || size === "large") && (
-                <div className="relative mt-6 pt-6 border-t border-white/10">
-                    <div className="flex items-center gap-2 text-emerald-400 text-sm font-medium">
-                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <div className="relative mt-6 pt-6 border-t border-border">
+                    <div className="flex items-center gap-2 text-emerald-500 text-sm font-medium">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                         Active & Processing
                     </div>
                 </div>
@@ -185,7 +186,7 @@ export const LandingPage = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen text-white overflow-hidden">
+        <div className="min-h-screen text-foreground overflow-hidden bg-background transition-colors duration-300">
             <AnimatedBackground />
 
             {/* Navigation */}
@@ -207,8 +208,9 @@ export const LandingPage = () => {
                         animate={{ opacity: 1, x: 0 }}
                         className="hidden md:flex items-center gap-8"
                     >
-                        <a href="#features" className="text-white/70 hover:text-emerald-400 transition-colors">Features</a>
-                        <a href="#about" className="text-white/70 hover:text-emerald-400 transition-colors">About</a>
+                        <a href="#features" className="text-muted-foreground hover:text-emerald-500 transition-colors">Features</a>
+                        <a href="#about" className="text-muted-foreground hover:text-emerald-500 transition-colors">About</a>
+                        <ThemeToggle />
                         <button
                             onClick={() => navigate('/chat')}
                             className="px-6 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 transition-all"
@@ -240,7 +242,7 @@ export const LandingPage = () => {
                         transition={{ delay: 0.3 }}
                         className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
                     >
-                        <span className="text-white">Personal Loans</span>
+                        <span className="text-foreground">Personal Loans</span>
                         <br />
                         <span className="text-gradient-emerald-gold">Made Intelligent</span>
                     </motion.h1>
@@ -250,10 +252,10 @@ export const LandingPage = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
-                        className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto mb-12 leading-relaxed"
+                        className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed"
                     >
                         Experience the future of financial services with our multi-agent AI system.
-                        <span className="text-emerald-400"> Smart. Secure. Seamless.</span>
+                        <span className="text-emerald-500"> Smart. Secure. Seamless.</span>
                     </motion.p>
 
                     {/* CTA Buttons */}
@@ -316,10 +318,10 @@ export const LandingPage = () => {
                         className="text-center mb-16"
                     >
                         <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                            <span className="text-white">Powered by </span>
+                            <span className="text-foreground">Powered by </span>
                             <span className="text-gradient-emerald">Multi-Agent AI</span>
                         </h2>
-                        <p className="text-white/50 text-xl max-w-2xl mx-auto">
+                        <p className="text-muted-foreground text-xl max-w-2xl mx-auto">
                             Our specialized AI agents work together to provide you with the fastest, most accurate loan processing experience.
                         </p>
                     </motion.div>
@@ -381,15 +383,15 @@ export const LandingPage = () => {
                             transition={{ duration: 0.6 }}
                         >
                             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                                <span className="text-white">About </span>
+                                <span className="text-foreground">About </span>
                                 <span className="text-gradient-emerald">Hive Capital</span>
                             </h2>
-                            <p className="text-white/60 text-lg leading-relaxed mb-6">
+                            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                                 Hive Capital is a next-generation financial services platform powered by cutting-edge
                                 Multi-Agent AI technology. We're revolutionizing the personal loan experience by making
                                 it faster, smarter, and more transparent than ever before.
                             </p>
-                            <p className="text-white/60 text-lg leading-relaxed mb-8">
+                            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
                                 Our mission is to democratize access to credit by leveraging artificial intelligence
                                 to streamline verification, underwriting, and approval processes—reducing wait times
                                 from days to minutes while maintaining the highest standards of security and compliance.
@@ -405,28 +407,19 @@ export const LandingPage = () => {
                                     className="col-span-2 md:col-span-1 p-5 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20"
                                 >
                                     <div className="text-3xl font-bold text-gradient-emerald">4</div>
-                                    <div className="text-white/50 text-sm mt-1">AI Agents</div>
+                                    <div className="text-muted-foreground text-sm mt-1">AI Agents</div>
                                 </motion.div>
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: 0.3 }}
-                                    className="p-5 rounded-2xl bg-white/5 border border-white/10"
+                                    className="p-5 rounded-2xl bg-secondary/50 border border-border"
                                 >
                                     <div className="text-3xl font-bold text-gradient-gold">&lt;2m</div>
-                                    <div className="text-white/50 text-sm mt-1">Response</div>
+                                    <div className="text-muted-foreground text-sm mt-1">Response</div>
                                 </motion.div>
-                                <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: 0.4 }}
-                                    className="p-5 rounded-2xl bg-white/5 border border-white/10"
-                                >
-                                    <div className="text-3xl font-bold text-white">24/7</div>
-                                    <div className="text-white/50 text-sm mt-1">Available</div>
-                                </motion.div>
+
                             </div>
                         </motion.div>
 
@@ -445,7 +438,7 @@ export const LandingPage = () => {
 
                                 {/* Agent Flow Diagram */}
                                 <div className="relative space-y-4">
-                                    <h3 className="text-xl font-semibold text-white mb-6 text-center">Our AI Agent Workflow</h3>
+                                    <h3 className="text-xl font-semibold text-foreground mb-6 text-center">Our AI Agent Workflow</h3>
                                     {[
                                         { icon: '💼', name: 'Sales Agent', desc: 'Qualifying & matching offers' },
                                         { icon: '🔍', name: 'Verification Agent', desc: 'KYC & identity verification' },
@@ -458,17 +451,17 @@ export const LandingPage = () => {
                                             whileInView={{ opacity: 1, x: 0 }}
                                             viewport={{ once: true }}
                                             transition={{ delay: 0.3 + i * 0.1 }}
-                                            className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/30 transition-colors group"
+                                            className="flex items-center gap-4 p-4 rounded-xl bg-secondary/50 border border-border hover:border-emerald-500/30 transition-colors group"
                                         >
                                             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-gold-400/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
                                                 {agent.icon}
                                             </div>
                                             <div>
-                                                <p className="text-white font-medium">{agent.name}</p>
-                                                <p className="text-white/40 text-sm">{agent.desc}</p>
+                                                <p className="text-foreground font-medium">{agent.name}</p>
+                                                <p className="text-muted-foreground text-sm">{agent.desc}</p>
                                             </div>
                                             {i < 3 && (
-                                                <div className="ml-auto text-emerald-400/50">→</div>
+                                                <div className="ml-auto text-emerald-500/50">→</div>
                                             )}
                                         </motion.div>
                                     ))}
@@ -492,10 +485,10 @@ export const LandingPage = () => {
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
 
                         <h2 className="relative text-4xl md:text-5xl font-bold mb-6">
-                            <span className="text-white">Ready to Get </span>
+                            <span className="text-foreground">Ready to Get </span>
                             <span className="text-gradient-gold">Started?</span>
                         </h2>
-                        <p className="relative text-white/60 text-xl mb-8 max-w-2xl mx-auto">
+                        <p className="relative text-muted-foreground text-xl mb-8 max-w-2xl mx-auto">
                             Join thousands of customers who have already experienced the future of loan processing.
                         </p>
                         <PremiumButton variant="primary" onClick={() => navigate('/chat')}>
@@ -506,15 +499,15 @@ export const LandingPage = () => {
             </section>
 
             {/* Footer */}
-            <footer className="relative py-12 px-6 border-t border-white/10">
+            <footer className="relative py-12 px-6 border-t border-border">
                 <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center">
                             <Sparkles className="w-4 h-4 text-white" />
                         </div>
-                        <span className="font-semibold text-white/80">Hive Capital</span>
+                        <span className="font-semibold text-muted-foreground/80">Hive Capital</span>
                     </div>
-                    <p className="text-white/40 text-sm">
+                    <p className="text-muted-foreground/40 text-sm">
                         © 2024 Hive Capital. Powered by EY Techathon 6.0
                     </p>
                 </div>

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useSidebar } from "./SidebarContext";
 import { useNavigate } from "react-router-dom";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface DashboardNavbarProps {
     title?: string;
@@ -46,14 +47,14 @@ const Modal = ({
                     initial={{ opacity: 0, scale: 0.95, y: -20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                    className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-[#0F1A14] border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden"
+                    className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl z-50 overflow-hidden"
                 >
                     {/* Header */}
-                    <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-                        <h2 className="text-lg font-semibold text-white">{title}</h2>
+                    <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+                        <h2 className="text-lg font-semibold text-foreground">{title}</h2>
                         <button
                             onClick={onClose}
-                            className="p-2 rounded-lg text-white/40 hover:text-white hover:bg-white/10 transition-colors"
+                            className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
                         >
                             <X className="w-5 h-5" />
                         </button>
@@ -76,14 +77,14 @@ export const DashboardNavbar = ({ title = "Dashboard", subtitle }: DashboardNavb
 
     return (
         <>
-            <header className="sticky top-0 z-30 bg-[#0A0F0D]/80 backdrop-blur-xl border-b border-white/10">
+            <header className="sticky top-0 z-30 bg-background/80 backdrop-blur-xl border-b border-border transition-colors duration-300">
                 <div className="flex items-center justify-between px-6 py-4">
                     {/* Left Section */}
                     <div className="flex items-center gap-4">
                         {/* Mobile Menu Toggle */}
                         <button
                             onClick={toggleSidebar}
-                            className="md:hidden p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+                            className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
                         >
                             <Menu className="w-6 h-6" />
                         </button>
@@ -94,33 +95,37 @@ export const DashboardNavbar = ({ title = "Dashboard", subtitle }: DashboardNavb
                                 <motion.span
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    className="text-white/40 text-sm hidden md:inline"
+                                    className="text-muted-foreground text-sm hidden md:inline"
                                 >
                                     Dashboard
                                 </motion.span>
                             )}
                             {!isCollapsed && subtitle && (
-                                <ChevronRight className="w-4 h-4 text-white/20 hidden md:inline" />
+                                <ChevronRight className="w-4 h-4 text-muted-foreground hidden md:inline" />
                             )}
-                            <h1 className="text-lg font-semibold text-white">{title}</h1>
+                            <h1 className="text-lg font-semibold text-foreground">{title}</h1>
                         </div>
                     </div>
 
                     {/* Right Section */}
                     <div className="flex items-center gap-3">
                         {/* Search */}
-                        <div className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/40 hover:border-emerald-500/30 transition-colors cursor-pointer group w-64">
-                            <Search className="w-4 h-4 group-hover:text-emerald-400 transition-colors" />
+                        {/* Search */}
+                        <div className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/50 border border-border text-muted-foreground hover:border-emerald-500/30 transition-colors cursor-pointer group w-64">
+                            <Search className="w-4 h-4 group-hover:text-emerald-500 transition-colors" />
                             <span className="text-sm">Search...</span>
-                            <kbd className="ml-auto px-2 py-0.5 rounded bg-white/10 text-xs text-white/40">⌘K</kbd>
+                            <kbd className="ml-auto px-2 py-0.5 rounded bg-muted text-xs text-muted-foreground">⌘K</kbd>
                         </div>
+
+                        {/* Theme Toggle */}
+                        <ThemeToggle />
 
                         {/* Notifications */}
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => setShowNotifications(true)}
-                            className="relative p-2.5 rounded-xl bg-white/5 border border-white/10 text-white/60 hover:text-white hover:border-emerald-500/30 transition-all"
+                            className="relative p-2.5 rounded-xl bg-secondary hover:bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-emerald-500/30 transition-all"
                         >
                             <Bell className="w-5 h-5" />
                             {/* Notification Badge */}
@@ -132,14 +137,14 @@ export const DashboardNavbar = ({ title = "Dashboard", subtitle }: DashboardNavb
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => setShowUserMenu(true)}
-                            className="flex items-center gap-3 p-1.5 pr-4 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/30 transition-all"
+                            className="flex items-center gap-3 p-1.5 pr-4 rounded-xl bg-secondary hover:bg-muted border border-border hover:border-emerald-500/30 transition-all"
                         >
                             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-gold-500 flex items-center justify-center text-white font-semibold text-sm">
                                 TC
                             </div>
                             <div className="hidden md:block text-left">
-                                <p className="text-sm font-medium text-white">Tata User</p>
-                                <p className="text-xs text-white/40">Admin</p>
+                                <p className="text-sm font-medium text-foreground">Tata User</p>
+                                <p className="text-xs text-muted-foreground">Admin</p>
                             </div>
                         </motion.button>
                     </div>
@@ -162,24 +167,24 @@ export const DashboardNavbar = ({ title = "Dashboard", subtitle }: DashboardNavb
                         <div
                             key={i}
                             className={`p-4 rounded-xl border transition-colors cursor-pointer ${notif.unread
-                                    ? 'bg-emerald-500/10 border-emerald-500/20 hover:border-emerald-500/40'
-                                    : 'bg-white/5 border-white/10 hover:border-white/20'
+                                ? 'bg-emerald-500/10 border-emerald-500/20 hover:border-emerald-500/40'
+                                : 'bg-secondary/50 border-border hover:border-foreground/20'
                                 }`}
                         >
                             <div className="flex items-start justify-between gap-3">
                                 <div>
-                                    <p className="text-white font-medium text-sm">{notif.title}</p>
-                                    <p className="text-white/50 text-sm mt-1">{notif.desc}</p>
+                                    <p className="text-foreground font-medium text-sm">{notif.title}</p>
+                                    <p className="text-muted-foreground text-sm mt-1">{notif.desc}</p>
                                 </div>
                                 {notif.unread && (
                                     <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0 mt-1.5" />
                                 )}
                             </div>
-                            <p className="text-white/30 text-xs mt-2">{notif.time}</p>
+                            <p className="text-muted-foreground/70 text-xs mt-2">{notif.time}</p>
                         </div>
                     ))}
                 </div>
-                <button className="w-full mt-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all text-sm font-medium">
+                <button className="w-full mt-4 py-3 rounded-xl bg-secondary hover:bg-muted border border-border text-muted-foreground hover:text-foreground transition-all text-sm font-medium">
                     View All Notifications
                 </button>
             </Modal>
@@ -192,13 +197,13 @@ export const DashboardNavbar = ({ title = "Dashboard", subtitle }: DashboardNavb
             >
                 <div className="space-y-4">
                     {/* User Info */}
-                    <div className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+                    <div className="flex items-center gap-4 p-4 rounded-xl bg-secondary/50 border border-border">
                         <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-gold-500 flex items-center justify-center text-white font-bold text-xl">
                             TC
                         </div>
                         <div>
-                            <p className="text-white font-semibold">Tata User</p>
-                            <p className="text-white/50 text-sm">user@tatacapital.com</p>
+                            <p className="text-foreground font-semibold">Tata User</p>
+                            <p className="text-muted-foreground text-sm">user@tatacapital.com</p>
                             <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-medium">Admin</span>
                         </div>
                     </div>
@@ -207,19 +212,19 @@ export const DashboardNavbar = ({ title = "Dashboard", subtitle }: DashboardNavb
                     <div className="space-y-2">
                         <button
                             onClick={() => { setShowUserMenu(false); navigate('/profile'); }}
-                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:text-white hover:bg-white/5 transition-all text-left"
+                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-all text-left"
                         >
                             <User className="w-5 h-5" />
                             <span>View Profile</span>
                         </button>
                         <button
                             onClick={() => { setShowUserMenu(false); navigate('/settings'); }}
-                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:text-white hover:bg-white/5 transition-all text-left"
+                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-all text-left"
                         >
                             <Settings className="w-5 h-5" />
                             <span>Settings</span>
                         </button>
-                        <div className="border-t border-white/10 pt-2">
+                        <div className="border-t border-border pt-2">
                             <button
                                 onClick={() => { setShowUserMenu(false); navigate('/'); }}
                                 className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-rose-400/80 hover:text-rose-400 hover:bg-rose-500/10 transition-all text-left"

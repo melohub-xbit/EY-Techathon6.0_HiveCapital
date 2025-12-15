@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Upload, Bot, User, Sparkles, RotateCcw, CheckCircle, Download, FileText } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { sendMessage } from '@/api';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -112,7 +113,7 @@ const TypingIndicator = () => (
         className="flex items-end gap-3"
     >
         <AgentAvatar agent="MASTER" />
-        <div className="px-5 py-4 rounded-2xl rounded-bl-none bg-white/5 border border-white/10 backdrop-blur-sm">
+        <div className="px-5 py-4 rounded-2xl rounded-bl-none bg-card border border-border backdrop-blur-sm shadow-sm">
             <div className="flex items-center gap-1.5">
                 <motion.div
                     className="w-2 h-2 rounded-full bg-emerald-400"
@@ -149,12 +150,12 @@ const AgentStatusBar = ({ currentAgent }: { currentAgent: string }) => {
                         key={agent}
                         className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all ${isActive
                             ? 'bg-emerald-500/20 border border-emerald-500/30'
-                            : 'bg-white/5 border border-white/10'
+                            : 'bg-muted/50 border border-border'
                             }`}
                         animate={{ scale: isActive ? 1.05 : 1 }}
                     >
                         <span className="text-sm">{config.icon}</span>
-                        <span className={`text-xs font-medium hidden sm:inline ${isActive ? 'text-emerald-400' : 'text-white/40'
+                        <span className={`text-xs font-medium hidden sm:inline ${isActive ? 'text-emerald-500' : 'text-muted-foreground'
                             }`}>
                             {agent}
                         </span>
@@ -187,8 +188,8 @@ const SessionCompleteBanner = ({ onNewChat }: { onNewChat: () => void }) => (
         >
             <CheckCircle className="w-10 h-10 text-emerald-400" />
         </motion.div>
-        <h3 className="text-xl font-semibold text-white mb-2">Session Complete</h3>
-        <p className="text-white/50 text-center mb-6">
+        <h3 className="text-xl font-semibold text-foreground mb-2">Session Complete</h3>
+        <p className="text-muted-foreground text-center mb-6">
             Thank you for using Hive Capital AI Assistant. Your session has ended.
         </p>
         <motion.button
@@ -341,20 +342,20 @@ export const ChatInterface = () => {
     }, []);
 
     return (
-        <div className="flex flex-col h-full bg-gradient-to-b from-[#0A0F0D] to-[#0F1A14]">
+        <div className="flex flex-col h-full bg-background transition-colors duration-300">
             {/* Chat Header */}
-            <div className="px-6 py-4 border-b border-white/10 bg-[#0A0F0D]/80 backdrop-blur-xl">
+            <div className="px-6 py-4 border-b border-border bg-background/80 backdrop-blur-xl sticky top-0 z-10 transition-colors duration-300">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center glow-emerald">
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center glow-emerald shadow-lg shadow-emerald-500/20">
                             <Bot className="w-6 h-6 text-white" />
                         </div>
                         <div>
-                            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+                            <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
                                 AI Loan Assistant
-                                <Sparkles className="w-4 h-4 text-gold-400" />
+                                <Sparkles className="w-4 h-4 text-gold-500" />
                             </h2>
-                            <p className="text-sm text-white/50 flex items-center gap-2">
+                            <p className="text-sm text-muted-foreground flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                                 {sessionComplete ? 'Session Ended' : (agentConfig[currentAgent]?.label || 'Online')}
                             </p>
@@ -362,17 +363,21 @@ export const ChatInterface = () => {
                     </div>
 
                     <div className="flex items-center gap-4">
+                        {/* Theme Toggle */}
+                        <ThemeToggle />
+
                         {/* New Chat Button */}
                         <motion.button
                             onClick={resetSession}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/60 hover:text-white hover:border-emerald-500/30 transition-all text-sm"
+                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary hover:bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-emerald-500/30 transition-all text-sm"
                             title="Start New Chat"
                         >
                             <RotateCcw className="w-4 h-4" />
                             <span className="hidden sm:inline">New Chat</span>
                         </motion.button>
+
 
                         {/* Agent Status Bar */}
                         <div className="hidden md:block">
@@ -407,8 +412,8 @@ export const ChatInterface = () => {
                                 <div className={`
                                     px-5 py-4 rounded-2xl backdrop-blur-sm
                                     ${msg.role === 'user'
-                                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-br-none glow-emerald'
-                                        : 'bg-white/5 border border-white/10 text-white/90 rounded-bl-none'
+                                        ? 'bg-gradient-to-r from-emerald-600 to-emerald-600 text-white rounded-br-none glow-emerald shadow-lg shadow-emerald-500/20'
+                                        : 'bg-card border border-border text-card-foreground rounded-bl-none shadow-sm'
                                     }
                                 `}>
                                     {/* Agent name badge */}
@@ -438,7 +443,7 @@ export const ChatInterface = () => {
                                     )}
 
                                     {/* Timestamp */}
-                                    <div className={`text-[10px] mt-2 ${msg.role === 'user' ? 'text-emerald-100/70' : 'text-white/30'
+                                    <div className={`text-[10px] mt-2 ${msg.role === 'user' ? 'text-emerald-100/70' : 'text-muted-foreground'
                                         }`}>
                                         {msg.timestamp.toLocaleTimeString([], {
                                             hour: '2-digit',
@@ -461,7 +466,7 @@ export const ChatInterface = () => {
 
             {/* Input Area */}
             {!sessionComplete && (
-                <div className="px-2 py-2 border-t border-white/10 bg-[#0A0F0D]/80 backdrop-blur-xl">
+                <div className="px-4 py-4 border-t border-border bg-background/80 backdrop-blur-xl transition-colors duration-300">
                     <form
                         onSubmit={(e) => { e.preventDefault(); handleSend(); }}
                         className="flex gap-2 items-center max-w-4xl mx-auto"
@@ -507,7 +512,7 @@ export const ChatInterface = () => {
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                                 placeholder="Type your message..."
-                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-all"
+                                className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-all"
                                 disabled={isLoading}
                             />
                         </div>
@@ -521,8 +526,8 @@ export const ChatInterface = () => {
                             className={`
                                 p-2 rounded-lg transition-all
                                 ${inputValue.trim() && !isLoading
-                                    ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white glow-emerald hover:glow-emerald-lg'
-                                    : 'bg-white/10 text-white/30 cursor-not-allowed'
+                                    ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white glow-emerald hover:glow-emerald-lg shadow-lg shadow-emerald-500/20'
+                                    : 'bg-muted text-muted-foreground cursor-not-allowed'
                                 }
                             `}
                         >

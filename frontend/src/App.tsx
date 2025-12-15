@@ -4,11 +4,12 @@ import { ChatPage } from "@/pages/ChatPage";
 import { MockDashboard } from "@/pages/MockDashboard";
 import { ProfilePage } from "@/pages/ProfilePage";
 import { SettingsPage } from "@/pages/SettingsPage";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./index.css";
 
 function App() {
   return (
-    <div className="dark">
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -18,7 +19,7 @@ function App() {
           <Route path="/settings" element={<SettingsPage />} />
         </Routes>
       </Router>
-    </div>
+    </ThemeProvider>
   );
 }
 

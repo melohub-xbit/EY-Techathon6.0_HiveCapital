@@ -21,7 +21,7 @@ export const ProfilePage = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="text-3xl font-bold text-white mb-4"
+                    className="text-3xl font-bold text-foreground mb-4"
                 >
                     Profile
                 </motion.h1>
@@ -31,7 +31,7 @@ export const ProfilePage = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="text-white/60 text-lg max-w-md mb-8"
+                    className="text-muted-foreground text-lg max-w-md mb-8"
                 >
                     Your profile settings and account information will be available here soon.
                 </motion.p>
@@ -61,10 +61,10 @@ export const ProfilePage = () => {
                     ].map((item, i) => (
                         <div
                             key={i}
-                            className="p-6 rounded-2xl bg-white/5 border border-white/10 text-left hover:border-emerald-500/30 transition-colors"
+                            className="p-6 rounded-2xl bg-card border border-border text-left hover:border-emerald-500/30 transition-colors"
                         >
-                            <p className="text-white/40 text-sm mb-1">{item.label}</p>
-                            <p className="text-white font-medium">{item.value}</p>
+                            <p className="text-muted-foreground text-sm mb-1">{item.label}</p>
+                            <p className="text-foreground font-medium">{item.value}</p>
                         </div>
                     ))}
                 </motion.div>

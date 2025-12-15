@@ -21,7 +21,7 @@ export const SettingsPage = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="text-3xl font-bold text-white mb-4"
+                    className="text-3xl font-bold text-foreground mb-4"
                 >
                     Settings
                 </motion.h1>
@@ -31,7 +31,7 @@ export const SettingsPage = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="text-white/60 text-lg max-w-md mb-8"
+                    className="text-muted-foreground text-lg max-w-md mb-8"
                 >
                     Application settings and configuration options will be available here soon.
                 </motion.p>
@@ -62,13 +62,13 @@ export const SettingsPage = () => {
                     ].map((item, i) => (
                         <div
                             key={i}
-                            className="p-5 rounded-2xl bg-white/5 border border-white/10 text-left hover:border-gold-400/30 transition-colors group"
+                            className="p-5 rounded-2xl bg-card border border-border text-left hover:border-gold-400/30 transition-colors group"
                         >
-                            <div className="text-white/40 group-hover:text-gold-400 transition-colors mb-3">
+                            <div className="text-muted-foreground group-hover:text-gold-400 transition-colors mb-3">
                                 {item.icon}
                             </div>
-                            <p className="text-white font-medium mb-1">{item.label}</p>
-                            <p className="text-white/40 text-sm">{item.desc}</p>
+                            <p className="text-foreground font-medium mb-1">{item.label}</p>
+                            <p className="text-muted-foreground text-sm">{item.desc}</p>
                         </div>
                     ))}
                 </motion.div>

@@ -55,7 +55,8 @@ const CreditScoreGauge = ({ score }: { score: number }) => {
                     cy="80"
                     r="45"
                     fill="none"
-                    stroke="rgba(255,255,255,0.1)"
+                    stroke="currentColor"
+                    className="text-muted/20"
                     strokeWidth="8"
                 />
                 {/* Score Arc */}
@@ -75,7 +76,7 @@ const CreditScoreGauge = ({ score }: { score: number }) => {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <motion.span
-                    className="text-4xl font-bold text-white"
+                    className="text-4xl font-bold text-foreground"
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 }}
@@ -92,11 +93,11 @@ const CreditScoreGauge = ({ score }: { score: number }) => {
 
 // Info Row Component
 const InfoRow = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
-    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
-        <div className="text-emerald-400">{icon}</div>
+    <div className="flex items-center gap-3 p-3 rounded-xl bg-secondary/50 border border-border">
+        <div className="text-emerald-500">{icon}</div>
         <div className="flex-1">
-            <p className="text-xs text-white/40">{label}</p>
-            <p className="text-sm text-white font-medium">{value}</p>
+            <p className="text-xs text-muted-foreground">{label}</p>
+            <p className="text-sm text-foreground font-medium">{value}</p>
         </div>
     </div>
 );
@@ -119,7 +120,7 @@ const CustomerCard = ({
             p-4 rounded-2xl cursor-pointer transition-all duration-300 border
             ${isSelected
                 ? 'bg-gradient-to-r from-emerald-500/20 to-emerald-600/10 border-emerald-500/50 glow-emerald'
-                : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                : 'bg-card border-border hover:bg-muted/50 hover:border-muted-foreground/20'
             }
         `}
     >
@@ -128,24 +129,24 @@ const CustomerCard = ({
                 w-12 h-12 rounded-xl flex items-center justify-center text-lg font-bold
                 ${isSelected
                     ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white'
-                    : 'bg-white/10 text-white/60'
+                    : 'bg-muted text-muted-foreground'
                 }
             `}>
                 {customer.name.charAt(0)}
             </div>
             <div className="flex-1 min-w-0">
-                <h3 className={`font-semibold truncate ${isSelected ? 'text-emerald-400' : 'text-white'}`}>
+                <h3 className={`font-semibold truncate ${isSelected ? 'text-emerald-500' : 'text-foreground'}`}>
                     {customer.name}
                 </h3>
-                <div className="flex items-center gap-2 text-xs text-white/40">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <MapPin className="w-3 h-3" />
                     <span>{customer.city}</span>
                 </div>
             </div>
         </div>
-        <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-xs">
-            <span className="text-white/40">Income</span>
-            <span className="text-emerald-400 font-medium">₹{customer.monthly_income.toLocaleString()}</span>
+        <div className="mt-3 pt-3 border-t border-border flex items-center justify-between text-xs">
+            <span className="text-muted-foreground">Income</span>
+            <span className="text-emerald-500 font-medium">₹{customer.monthly_income.toLocaleString()}</span>
         </div>
     </motion.div>
 );
@@ -231,20 +232,20 @@ export const MockDashboard: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 {/* Customer List Panel */}
                 <div className="lg:col-span-4 xl:col-span-3">
-                    <div className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm overflow-hidden">
+                    <div className="rounded-2xl bg-card border border-border backdrop-blur-sm overflow-hidden">
                         {/* Search Header */}
-                        <div className="p-4 border-b border-white/10">
+                        <div className="p-4 border-b border-border">
                             <div className="relative">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                 <input
                                     type="text"
                                     placeholder="Search customers..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 text-sm focus:outline-none focus:border-emerald-500/50"
+                                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:border-emerald-500/50"
                                 />
                             </div>
-                            <p className="text-xs text-white/40 mt-3">
+                            <p className="text-xs text-muted-foreground mt-3">
                                 {filteredCustomers.length} customers found
                             </p>
                         </div>
@@ -272,11 +273,11 @@ export const MockDashboard: React.FC = () => {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="flex items-center justify-center h-64 rounded-2xl bg-white/5 border border-white/10"
+                                className="flex items-center justify-center h-64 rounded-2xl bg-card border border-border"
                             >
                                 <div className="flex flex-col items-center gap-4">
-                                    <Loader2 className="w-10 h-10 text-emerald-400 animate-spin" />
-                                    <p className="text-white/40">Loading customer data...</p>
+                                    <Loader2 className="w-10 h-10 text-emerald-500 animate-spin" />
+                                    <p className="text-muted-foreground">Loading customer data...</p>
                                 </div>
                             </motion.div>
                         ) : selectedCustomer ? (
@@ -288,14 +289,14 @@ export const MockDashboard: React.FC = () => {
                                 className="space-y-6"
                             >
                                 {/* KYC Details Card */}
-                                <div className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm p-6">
+                                <div className="rounded-2xl bg-card border border-border backdrop-blur-sm p-6">
                                     <div className="flex items-center gap-3 mb-6">
                                         <div className="p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/30">
-                                            <User className="w-5 h-5 text-emerald-400" />
+                                            <User className="w-5 h-5 text-emerald-500" />
                                         </div>
                                         <div>
-                                            <h2 className="text-xl font-bold text-white">{selectedCustomer.name}</h2>
-                                            <p className="text-sm text-white/40">Customer ID: {selectedCustomer.id}</p>
+                                            <h2 className="text-xl font-bold text-foreground">{selectedCustomer.name}</h2>
+                                            <p className="text-sm text-muted-foreground">Customer ID: {selectedCustomer.id}</p>
                                         </div>
                                     </div>
 
@@ -310,13 +311,13 @@ export const MockDashboard: React.FC = () => {
 
                                     {/* Existing Loans */}
                                     {selectedCustomer.existing_loans.length > 0 && (
-                                        <div className="mt-6 pt-6 border-t border-white/10">
-                                            <h3 className="text-sm font-semibold text-white/60 mb-3">Existing Loans</h3>
+                                        <div className="mt-6 pt-6 border-t border-border">
+                                            <h3 className="text-sm font-semibold text-muted-foreground mb-3">Existing Loans</h3>
                                             <div className="flex flex-wrap gap-2">
                                                 {selectedCustomer.existing_loans.map((loan, i) => (
                                                     <div key={i} className="px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                                                        <span className="text-amber-400 text-sm font-medium">{loan.type}</span>
-                                                        <span className="text-white/40 text-xs ml-2">EMI: ₹{loan.emi.toLocaleString()}</span>
+                                                        <span className="text-amber-600 dark:text-amber-400 text-sm font-medium">{loan.type}</span>
+                                                        <span className="text-muted-foreground text-xs ml-2">EMI: ₹{loan.emi.toLocaleString()}</span>
                                                     </div>
                                                 ))}
                                             </div>
@@ -327,18 +328,18 @@ export const MockDashboard: React.FC = () => {
                                 {/* Bento Grid for Score and Offer */}
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     {/* Credit Score Card - Takes 1 column */}
-                                    <div className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm p-6">
+                                    <div className="rounded-2xl bg-card border border-border backdrop-blur-sm p-6">
                                         <div className="flex items-center gap-3 mb-6">
                                             <div className="p-3 rounded-xl bg-purple-500/20 border border-purple-500/30">
-                                                <TrendingUp className="w-5 h-5 text-purple-400" />
+                                                <TrendingUp className="w-5 h-5 text-purple-500" />
                                             </div>
-                                            <h3 className="text-lg font-semibold text-white">Credit Score</h3>
+                                            <h3 className="text-lg font-semibold text-foreground">Credit Score</h3>
                                         </div>
 
                                         {creditScore ? (
                                             <CreditScoreGauge score={creditScore.score} />
                                         ) : (
-                                            <div className="flex flex-col items-center justify-center h-40 text-white/40">
+                                            <div className="flex flex-col items-center justify-center h-40 text-muted-foreground">
                                                 <AlertCircle className="w-10 h-10 mb-2" />
                                                 <p className="text-sm">Score unavailable</p>
                                             </div>
@@ -349,32 +350,32 @@ export const MockDashboard: React.FC = () => {
                                     <div className="md:col-span-2 rounded-2xl bg-gradient-to-br from-gold-500/10 to-gold-600/5 border border-gold-500/20 backdrop-blur-sm p-6">
                                         <div className="flex items-center gap-3 mb-6">
                                             <div className="p-3 rounded-xl bg-gold-500/20 border border-gold-500/30">
-                                                <Gift className="w-5 h-5 text-gold-400" />
+                                                <Gift className="w-5 h-5 text-gold-500" />
                                             </div>
-                                            <h3 className="text-lg font-semibold text-white">Pre-Approved Offer</h3>
+                                            <h3 className="text-lg font-semibold text-foreground">Pre-Approved Offer</h3>
                                         </div>
 
                                         {offer ? (
                                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                                 <div className="md:col-span-2 p-6 rounded-xl bg-gold-500/10 border border-gold-500/20">
-                                                    <p className="text-xs text-gold-400/60 uppercase tracking-wider mb-1">Maximum Loan Limit</p>
-                                                    <p className="text-4xl font-bold text-gold-400">
+                                                    <p className="text-xs text-gold-600 dark:text-gold-400/60 uppercase tracking-wider mb-1">Maximum Loan Limit</p>
+                                                    <p className="text-4xl font-bold text-gold-600 dark:text-gold-400">
                                                         ₹{offer.pre_approved_limit.toLocaleString()}
                                                     </p>
                                                 </div>
                                                 <div className="space-y-3">
-                                                    <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                                                        <p className="text-white/40 text-xs">Interest Rate</p>
-                                                        <p className="text-xl font-bold text-white">{offer.interest_rate}%</p>
+                                                    <div className="p-4 rounded-xl bg-card border border-border">
+                                                        <p className="text-muted-foreground text-xs">Interest Rate</p>
+                                                        <p className="text-xl font-bold text-foreground">{offer.interest_rate}%</p>
                                                     </div>
-                                                    <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                                                        <p className="text-white/40 text-xs">Valid Until</p>
-                                                        <p className="text-lg font-semibold text-white">{offer.validity}</p>
+                                                    <div className="p-4 rounded-xl bg-card border border-border">
+                                                        <p className="text-muted-foreground text-xs">Valid Until</p>
+                                                        <p className="text-lg font-semibold text-foreground">{offer.validity}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         ) : (
-                                            <div className="flex flex-col items-center justify-center h-40 text-white/40">
+                                            <div className="flex flex-col items-center justify-center h-40 text-muted-foreground">
                                                 <AlertCircle className="w-10 h-10 mb-2" />
                                                 <p className="text-sm">No offers available</p>
                                             </div>
@@ -383,18 +384,18 @@ export const MockDashboard: React.FC = () => {
                                 </div>
 
                                 {/* Upload Section */}
-                                <div className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm p-6">
+                                <div className="rounded-2xl bg-card border border-border backdrop-blur-sm p-6">
                                     <div className="flex items-center gap-3 mb-6">
                                         <div className="p-3 rounded-xl bg-teal-500/20 border border-teal-500/30">
-                                            <Upload className="w-5 h-5 text-teal-400" />
+                                            <Upload className="w-5 h-5 text-teal-500" />
                                         </div>
-                                        <h3 className="text-lg font-semibold text-white">Upload Salary Slip</h3>
+                                        <h3 className="text-lg font-semibold text-foreground">Upload Salary Slip</h3>
                                     </div>
 
-                                    <label className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-white/20 rounded-xl cursor-pointer hover:border-teal-500/50 hover:bg-teal-500/5 transition-all">
-                                        <Upload className="w-10 h-10 text-white/40 mb-3" />
-                                        <p className="text-white/60 text-sm">Click to upload or drag and drop</p>
-                                        <p className="text-white/30 text-xs mt-1">PDF, PNG, JPG up to 10MB</p>
+                                    <label className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-border rounded-xl cursor-pointer hover:border-teal-500/50 hover:bg-teal-500/5 transition-all">
+                                        <Upload className="w-10 h-10 text-muted-foreground mb-3" />
+                                        <p className="text-muted-foreground text-sm">Click to upload or drag and drop</p>
+                                        <p className="text-muted-foreground/70 text-xs mt-1">PDF, PNG, JPG up to 10MB</p>
                                         <input
                                             type="file"
                                             onChange={handleFileUpload}
@@ -429,11 +430,11 @@ export const MockDashboard: React.FC = () => {
                                 key="empty"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="flex flex-col items-center justify-center h-96 rounded-2xl bg-white/5 border border-white/10 border-dashed"
+                                className="flex flex-col items-center justify-center h-96 rounded-2xl bg-card border border-border border-dashed"
                             >
-                                <User className="w-16 h-16 text-white/20 mb-4" />
-                                <h3 className="text-xl font-semibold text-white/40 mb-2">No Customer Selected</h3>
-                                <p className="text-white/20 text-sm">Select a customer from the list to view details</p>
+                                <User className="w-16 h-16 text-muted-foreground mb-4" />
+                                <h3 className="text-xl font-semibold text-muted-foreground mb-2">No Customer Selected</h3>
+                                <p className="text-muted-foreground/70 text-sm">Select a customer from the list to view details</p>
                             </motion.div>
                         )}
                     </AnimatePresence>

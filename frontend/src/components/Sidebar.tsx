@@ -28,8 +28,8 @@ const NavItem = ({ icon, label, isActive, isCollapsed, onClick }: NavItemProps) 
         className={`
       w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative
       ${isActive
-                ? "bg-gradient-to-r from-emerald-500/20 to-emerald-600/10 text-emerald-400 border border-emerald-500/30"
-                : "text-white/60 hover:text-white hover:bg-white/5"
+                ? "bg-gradient-to-r from-emerald-500/20 to-emerald-600/10 text-emerald-500 border border-emerald-500/30"
+                : "text-muted-foreground hover:text-foreground hover:bg-muted"
             }
     `}
         whileHover={{ x: 4 }}
@@ -45,7 +45,7 @@ const NavItem = ({ icon, label, isActive, isCollapsed, onClick }: NavItemProps) 
             />
         )}
 
-        <span className={`flex-shrink-0 ${isActive ? "text-emerald-400" : "text-white/60 group-hover:text-emerald-400"}`}>
+        <span className={`flex-shrink-0 ${isActive ? "text-emerald-500" : "text-muted-foreground group-hover:text-emerald-500"}`}>
             {icon}
         </span>
 
@@ -64,7 +64,7 @@ const NavItem = ({ icon, label, isActive, isCollapsed, onClick }: NavItemProps) 
 
         {/* Tooltip when collapsed */}
         {isCollapsed && (
-            <div className="absolute left-full ml-2 px-3 py-2 rounded-lg bg-[#0F1A14] border border-white/10 text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+            <div className="absolute left-full ml-2 px-3 py-2 rounded-lg bg-popover border border-border text-popover-foreground text-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                 {label}
             </div>
         )}
@@ -99,8 +99,8 @@ export const Sidebar = () => {
                 animate={{ width: isCollapsed ? 80 : 256 }}
                 className={`
           fixed left-0 top-0 h-full z-50
-          bg-[#0A0F0D]/95 backdrop-blur-xl
-          border-r border-white/10
+          bg-background/95 backdrop-blur-xl
+          border-r border-border
           flex flex-col
           overflow-hidden
           transition-transform duration-300 md:translate-x-0
@@ -108,7 +108,7 @@ export const Sidebar = () => {
         `}
             >
                 {/* Logo Section */}
-                <div className={`border-b border-white/10 ${isCollapsed ? 'p-2' : 'p-4'}`}>
+                <div className={`border-b border-border ${isCollapsed ? 'p-2' : 'p-4'}`}>
                     <div className="flex items-center justify-between">
                         {/* Clickable Logo - Redirects to Landing Page */}
                         <div
@@ -129,8 +129,8 @@ export const Sidebar = () => {
                                         exit={{ opacity: 0, x: -10 }}
                                         className="overflow-hidden"
                                     >
-                                        <h1 className="font-bold text-white whitespace-nowrap group-hover:text-emerald-300 transition-colors">Hive Capital</h1>
-                                        <p className="text-xs text-emerald-400 whitespace-nowrap">AI Assistant</p>
+                                        <h1 className="font-bold text-foreground whitespace-nowrap group-hover:text-emerald-400 transition-colors">Hive Capital</h1>
+                                        <p className="text-xs text-emerald-500 whitespace-nowrap">AI Assistant</p>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -139,7 +139,7 @@ export const Sidebar = () => {
                         {/* Collapse Toggle Arrow */}
                         <motion.button
                             onClick={toggleSidebar}
-                            className="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/10 transition-all"
+                            className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                         >
@@ -169,7 +169,7 @@ export const Sidebar = () => {
                 </nav>
 
                 {/* Bottom Section */}
-                <div className={`border-t border-white/10 ${isCollapsed ? 'p-2' : 'p-4'}`}>
+                <div className={`border-t border-border ${isCollapsed ? 'p-2' : 'p-4'}`}>
                     {/* Logout - TODO: Replace with proper auth logout logic */}
                     <button
                         onClick={() => {
