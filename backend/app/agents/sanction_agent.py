@@ -52,7 +52,7 @@ class SanctionAgent:
         """
         
         # Save to a file - ensure the static directory exists (relative to where uvicorn runs)
-        static_dir = "backend/static"
+        static_dir = "static"
         os.makedirs(static_dir, exist_ok=True)
         
         filename = f"Sanction_Letter_{state.session_id}.txt"

@@ -211,6 +211,7 @@ export const ChatInterface = () => {
     const [currentAgent, setCurrentAgent] = useState('MASTER');
     const [sessionComplete, setSessionComplete] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const hasStartedRef = useRef(false);
 
     const scrollToBottom = () => {
@@ -220,6 +221,13 @@ export const ChatInterface = () => {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    // Focus input when agent finishes responding
+    useEffect(() => {
+        if (!isLoading && !sessionComplete) {
+            inputRef.current?.focus();
+        }
+    }, [isLoading, sessionComplete]);
 
     const handleSendInternal = useCallback(async (text: string, currentSessionId: string) => {
         if (!text.trim()) return;
@@ -453,32 +461,53 @@ export const ChatInterface = () => {
 
             {/* Input Area */}
             {!sessionComplete && (
-                <div className="p-4 sm:p-6 border-t border-white/10 bg-[#0A0F0D]/80 backdrop-blur-xl">
+                <div className="px-2 py-2 border-t border-white/10 bg-[#0A0F0D]/80 backdrop-blur-xl">
                     <form
                         onSubmit={(e) => { e.preventDefault(); handleSend(); }}
-                        className="flex gap-3 items-center max-w-4xl mx-auto"
+                        className="flex gap-2 items-center max-w-4xl mx-auto"
                     >
                         {/* File Upload (when in UNDERWRITING phase) */}
                         {currentAgent === 'UNDERWRITING' && (
-                            <motion.button
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                type="button"
-                                onClick={() => handleSend("I am uploading my Salary Slip [Simulated Attachment]")}
-                                className="p-3 rounded-xl bg-gold-500/20 border border-gold-500/30 text-gold-400 hover:bg-gold-500/30 transition-all"
-                                title="Upload Salary Slip"
-                            >
-                                <Upload className="w-5 h-5" />
-                            </motion.button>
+                            <div className="relative">
+                                <motion.button
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    type="button"
+                                    onClick={() => handleSend("I am uploading my Salary Slip [Simulated Attachment]")}
+                                    className="p-2 rounded-lg bg-gold-500/20 border border-gold-500/30 text-gold-400 hover:bg-gold-500/30 transition-all"
+                                    title="Upload Salary Slip"
+                                >
+                                    <Upload className="w-4 h-4" />
+                                </motion.button>
+                                {/* Animated tooltip */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    transition={{ delay: 0.3, duration: 0.3 }}
+                                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap"
+                                >
+                                    <div className="relative px-3 py-2 rounded-lg bg-gold-500 text-black text-xs font-medium shadow-lg">
+                                        <motion.span
+                                            animate={{ opacity: [1, 0.7, 1] }}
+                                            transition={{ duration: 1.5, repeat: Infinity }}
+                                        >
+                                            👆 Click to upload salary slip
+                                        </motion.span>
+                                        {/* Arrow */}
+                                        <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-gold-500" />
+                                    </div>
+                                </motion.div>
+                            </div>
                         )}
 
                         {/* Input Field */}
                         <div className="relative flex-1">
                             <input
+                                ref={inputRef}
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                                 placeholder="Type your message..."
-                                className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 transition-all"
+                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-all"
                                 disabled={isLoading}
                             />
                         </div>
@@ -490,7 +519,7 @@ export const ChatInterface = () => {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className={`
-                                p-4 rounded-2xl transition-all
+                                p-2 rounded-lg transition-all
                                 ${inputValue.trim() && !isLoading
                                     ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white glow-emerald hover:glow-emerald-lg'
                                     : 'bg-white/10 text-white/30 cursor-not-allowed'
@@ -501,10 +530,6 @@ export const ChatInterface = () => {
                         </motion.button>
                     </form>
 
-                    {/* Powered by badge */}
-                    <p className="text-center text-white/20 text-xs mt-4">
-                        Powered by Multi-Agent AI • Hive Capital
-                    </p>
                 </div>
             )}
         </div>

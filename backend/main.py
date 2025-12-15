@@ -22,7 +22,7 @@ app.add_middleware(
 )
 
 # Create static directory for sanction letters
-STATIC_DIR = "backend/static"
+STATIC_DIR = "static"
 os.makedirs(STATIC_DIR, exist_ok=True)
 
 # Download endpoint with proper Content-Disposition header

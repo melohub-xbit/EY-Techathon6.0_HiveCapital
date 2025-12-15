@@ -76,7 +76,7 @@ async def upload_salary_slip(file: UploadFile = File(...)):
     """Mock upload specific for salary slips"""
     
     # Save file to static/uploads just to demonstrate it works
-    upload_dir = "backend/static/uploads"
+    upload_dir = "static/uploads"
     os.makedirs(upload_dir, exist_ok=True)
     
     file_id = str(uuid.uuid4())

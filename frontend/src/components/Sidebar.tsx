@@ -102,13 +102,13 @@ export const Sidebar = () => {
           bg-[#0A0F0D]/95 backdrop-blur-xl
           border-r border-white/10
           flex flex-col
-          overflow-x-hidden overflow-y-auto
+          overflow-hidden
           transition-transform duration-300 md:translate-x-0
           ${isCollapsed ? "-translate-x-full md:translate-x-0" : "translate-x-0"}
         `}
             >
                 {/* Logo Section */}
-                <div className="p-4 border-b border-white/10">
+                <div className={`border-b border-white/10 ${isCollapsed ? 'p-2' : 'p-4'}`}>
                     <div className="flex items-center justify-between">
                         {/* Clickable Logo - Redirects to Landing Page */}
                         <div
@@ -154,7 +154,7 @@ export const Sidebar = () => {
 
 
                 {/* Navigation */}
-                <nav className="flex-1 p-4 space-y-2 overflow-y-auto scrollbar-thin">
+                <nav className={`flex-1 space-y-2 overflow-y-auto overflow-x-hidden scrollbar-thin ${isCollapsed ? 'p-2' : 'p-4'}`}>
                     {navItems.map((item) => (
                         <NavItem
                             key={item.path}
@@ -169,7 +169,7 @@ export const Sidebar = () => {
                 </nav>
 
                 {/* Bottom Section */}
-                <div className="p-4 border-t border-white/10">
+                <div className={`border-t border-white/10 ${isCollapsed ? 'p-2' : 'p-4'}`}>
                     {/* Logout - TODO: Replace with proper auth logout logic */}
                     <button
                         onClick={() => {

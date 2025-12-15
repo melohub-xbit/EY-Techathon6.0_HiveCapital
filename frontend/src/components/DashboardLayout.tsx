@@ -20,7 +20,7 @@ export const DashboardLayout = ({ children, title, subtitle }: DashboardLayoutPr
 
     return (
         <SidebarContext.Provider value={{ isCollapsed, toggleSidebar, setCollapsed }}>
-            <div className="min-h-screen bg-[#0A0F0D] text-white flex">
+            <div className="min-h-screen bg-[#0A0F0D] text-white flex overflow-x-hidden">
                 {/* Sidebar */}
                 <Sidebar />
 
