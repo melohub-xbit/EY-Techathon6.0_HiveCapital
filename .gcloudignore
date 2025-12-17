@@ -8,7 +8,7 @@ __pycache__/
 *.pyc
 backend/.venv/
 backend/__pycache__/
-*.json
+
 !backend/session_store.json  # If you want to keep this, but likely you don't want to deploy session store? Actually usually we ignore it. The user has it in gitignore so let's ignore it.
 session_store.json
 
