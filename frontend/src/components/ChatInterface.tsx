@@ -271,7 +271,7 @@ export const ChatInterface = () => {
             // Auto-download sanction letter if available
             if (sanctionLetterUrl) {
                 setTimeout(() => {
-                    downloadFile(sanctionLetterUrl, `Hive_Capital_Sanction_Letter.txt`);
+                    downloadFile(sanctionLetterUrl, `Hive_Capital_Sanction_Letter.pdf`);
                 }, 500);
             }
         } catch (error) {
@@ -433,7 +433,7 @@ export const ChatInterface = () => {
                                         <motion.button
                                             initial={{ opacity: 0, y: 10 }}
                                             animate={{ opacity: 1, y: 0 }}
-                                            onClick={() => downloadFile(msg.sanctionLetterUrl!, 'Hive_Capital_Sanction_Letter.txt')}
+                                            onClick={() => downloadFile(msg.sanctionLetterUrl!, 'Hive_Capital_Sanction_Letter.pdf')}
                                             className="mt-4 flex items-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-medium text-sm hover:from-emerald-600 hover:to-emerald-700 transition-all glow-emerald hover:glow-emerald-lg"
                                         >
                                             <FileText className="w-4 h-4" />

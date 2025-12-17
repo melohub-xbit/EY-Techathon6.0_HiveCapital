@@ -34,7 +34,7 @@ async def download_file(filename: str):
     return FileResponse(
         path=filepath,
         filename=filename,
-        media_type="application/octet-stream",
+        media_type="application/pdf",
         headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
 

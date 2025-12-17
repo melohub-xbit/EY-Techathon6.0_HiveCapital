@@ -10,56 +10,96 @@ class SanctionAgent:
         if not state.is_approved:
             return "Cannot generate sanction letter for unapproved loan."
 
-        # Generate "PDF" (Simulated)
-        # In a real app, use reportlab or fpdf
-        # Here we create a formatted text block and simulated download link
+        # Generate PDF Sanction Letter using ReportLab
+        from reportlab.lib.pagesizes import letter
+        from reportlab.lib import colors
+        from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+        from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
         
-        sanction_content = f"""
-        ╔══════════════════════════════════════════════════════════════╗
-        ║          HIVE CAPITAL - PERSONAL LOAN SANCTION LETTER        ║
-        ╚══════════════════════════════════════════════════════════════╝
-        
-        Date: {datetime.now().strftime("%Y-%m-%d")}
-        Reference No: HC/{state.session_id[:8].upper()}/{datetime.now().strftime("%Y%m%d")}
-        
-        Dear {state.name},
-        
-        Congratulations! We are pleased to inform you that your Personal Loan 
-        application has been approved.
-        
-        ┌─────────────────────────────────────────────────────────────┐
-        │                      LOAN DETAILS                          │
-        ├─────────────────────────────────────────────────────────────┤
-        │  Sanctioned Amount    :  ₹ {(state.loan_amount or 0):,.2f}                      
-        │  Loan Tenure          :  {state.loan_tenure or 12} Months                          
-        │  Interest Rate        :  {state.interest_rate or 10.99}% per annum              
-        │  Processing Fee       :  ₹ {(state.loan_amount or 0) * 0.01:,.2f} (1%)                   
-        └─────────────────────────────────────────────────────────────┘
-        
-        TERMS & CONDITIONS:
-        1. This sanction is valid for 30 days from the date of issue.
-        2. Disbursement is subject to completion of documentation.
-        3. EMI will commence from the next month of disbursement.
-        4. Prepayment charges may apply as per bank policy.
-        
-        For any queries, please contact our customer support.
-        
-        ──────────────────────────────────────────────────────────────
-        Authorized Signatory
-        HIVE CAPITAL FINANCIAL SERVICES
-        (This is a digitally signed document)
-        ──────────────────────────────────────────────────────────────
-        """
-        
-        # Save to a file - ensure the static directory exists (relative to where uvicorn runs)
         static_dir = "static"
         os.makedirs(static_dir, exist_ok=True)
         
-        filename = f"Sanction_Letter_{state.session_id}.txt"
+        filename = f"Sanction_Letter_{state.session_id}.pdf"
         filepath = os.path.join(static_dir, filename)
         
-        with open(filepath, "w", encoding="utf-8") as f:
-            f.write(sanction_content)
+        doc = SimpleDocTemplate(filepath, pagesize=letter)
+        styles = getSampleStyleSheet()
+        story = []
+        
+        # 1. Title
+        title_style = ParagraphStyle(
+            'TitleStyle',
+            parent=styles['Heading1'],
+            alignment=1, # Center
+            fontSize=20,
+            textColor=colors.HexColor('#10B981'), # Emerald Green
+            spaceAfter=20
+        )
+        story.append(Paragraph("HIVE CAPITAL - SANCTION LETTER", title_style))
+        story.append(Spacer(1, 12))
+        
+        # 2. Date and Ref
+        normal_style = styles['Normal']
+        story.append(Paragraph(f"<b>Date:</b> {datetime.now().strftime('%Y-%m-%d')}", normal_style))
+        story.append(Paragraph(f"<b>Reference No:</b> HC/{state.session_id[:8].upper()}/{datetime.now().strftime('%Y%m%d')}", normal_style))
+        story.append(Spacer(1, 20))
+        
+        # 3. Salutation
+        story.append(Paragraph(f"Dear <b>{state.name}</b>,", normal_style))
+        story.append(Spacer(1, 12))
+        story.append(Paragraph("Congratulations! We are pleased to inform you that your Personal Loan application has been approved based on your credit profile and income verification.", normal_style))
+        story.append(Spacer(1, 20))
+        
+        # 4. Loan Details Table
+        # Handle potential None values safely
+        amount = state.loan_amount or 0
+        tenure = state.loan_tenure or 12
+        rate = state.interest_rate or 10.99
+        processing_fee = amount * 0.01
+        
+        data = [
+            ['Loan Details', 'Value'],
+            ['Sanctioned Amount', f"INR {amount:,.2f}"],
+            ['Loan Tenure', f"{tenure} Months"],
+            ['Interest Rate', f"{rate}% per annum"],
+            ['Processing Fee (1%)', f"INR {processing_fee:,.2f}"],
+            ['EMI Start Date', 'Next Month Cycle']
+        ]
+        
+        table = Table(data, colWidths=[200, 200])
+        table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (1, 0), colors.HexColor('#10B981')), # Header Green
+            ('TEXTCOLOR', (0, 0), (1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 12),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+            ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ]))
+        story.append(table)
+        story.append(Spacer(1, 20))
+        
+        # 5. Terms
+        story.append(Paragraph("<b>TERMS & CONDITIONS:</b>", styles['Heading4']))
+        terms = [
+            "1. This sanction is valid for 30 days from the date of issue.",
+            "2. Disbursement is subject to final documentation and bank formalities.",
+            "3. Interest rates are subject to change as per RB1 guidelines.",
+            "4. Prepayment charges may apply as per bank policy."
+        ]
+        for term in terms:
+            story.append(Paragraph(term, normal_style))
+        
+        story.append(Spacer(1, 30))
+        
+        # 6. Footer/Signature
+        story.append(Paragraph("Authorized Signatory", styles['Italic']))
+        story.append(Paragraph("<b>HIVE CAPITAL FINANCIAL SERVICES</b>", styles['Heading4']))
+        story.append(Paragraph("(This is a digitally generated document and does not require a physical signature)", styles['Italic']))
+        
+        # Build PDF
+        doc.build(story)
         
         # Store the download URL in state
         download_url = f"/download/{filename}"
