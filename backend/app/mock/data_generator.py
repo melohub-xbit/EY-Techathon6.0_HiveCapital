@@ -77,7 +77,7 @@ class MockDataManager:
                 "age": age,
                 "city": city,
                 "email": f"{name.lower().replace(' ', '.')}@example.com",
-                "phone": fake.phone_number(),
+                "phone": fake.phone_number().replace("+91", "").strip(),
                 "pan": pan,
                 "monthly_income": income,
                 "existing_loans": existing_loans
