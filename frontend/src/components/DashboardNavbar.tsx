@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-    Bell,
-    Search,
     Menu,
     ChevronRight,
     X,
@@ -111,42 +109,20 @@ export const DashboardNavbar = ({ title = "Dashboard", subtitle }: DashboardNavb
                     <div className="flex items-center gap-3">
                         {/* Search */}
                         {/* Search */}
-                        <div className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/50 border border-border text-muted-foreground hover:border-emerald-500/30 transition-colors cursor-pointer group w-64">
+                        {/* <div className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/50 border border-border text-muted-foreground hover:border-emerald-500/30 transition-colors cursor-pointer group w-64">
                             <Search className="w-4 h-4 group-hover:text-emerald-500 transition-colors" />
                             <span className="text-sm">Search...</span>
                             <kbd className="ml-auto px-2 py-0.5 rounded bg-muted text-xs text-muted-foreground">⌘K</kbd>
-                        </div>
+                        </div> */}
 
                         {/* Theme Toggle */}
                         <ThemeToggle />
 
                         {/* Notifications */}
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => setShowNotifications(true)}
-                            className="relative p-2.5 rounded-xl bg-secondary hover:bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-emerald-500/30 transition-all"
-                        >
-                            <Bell className="w-5 h-5" />
-                            {/* Notification Badge */}
-                            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-[#0A0F0D]" />
-                        </motion.button>
+                        
 
                         {/* User Avatar */}
-                        <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => setShowUserMenu(true)}
-                            className="flex items-center gap-3 p-1.5 pr-4 rounded-xl bg-secondary hover:bg-muted border border-border hover:border-emerald-500/30 transition-all"
-                        >
-                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-gold-500 flex items-center justify-center text-white font-semibold text-sm">
-                                TC
-                            </div>
-                            <div className="hidden md:block text-left">
-                                <p className="text-sm font-medium text-foreground">Tata User</p>
-                                <p className="text-xs text-muted-foreground">Admin</p>
-                            </div>
-                        </motion.button>
+                        
                     </div>
                 </div>
             </header>

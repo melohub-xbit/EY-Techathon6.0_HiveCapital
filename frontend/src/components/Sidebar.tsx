@@ -3,12 +3,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
     MessageSquare,
     LayoutDashboard,
-    Settings,
     LogOut,
     ChevronLeft,
     ChevronRight,
     Sparkles,
-    User,
     Home
 } from "lucide-react";
 import { useSidebar } from "./SidebarContext";
@@ -80,8 +78,8 @@ export const Sidebar = () => {
         { icon: <Home className="w-5 h-5" />, label: "Home", path: "/" },
         { icon: <MessageSquare className="w-5 h-5" />, label: "AI Assistant", path: "/chat" },
         { icon: <LayoutDashboard className="w-5 h-5" />, label: "Customer Data", path: "/mock-dashboard" },
-        { icon: <User className="w-5 h-5" />, label: "Profile", path: "/profile" },
-        { icon: <Settings className="w-5 h-5" />, label: "Settings", path: "/settings" },
+        // { icon: <User className="w-5 h-5" />, label: "Profile", path: "/profile" },
+        // { icon: <Settings className="w-5 h-5" />, label: "Settings", path: "/settings" },
     ];
 
     return (
