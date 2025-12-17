@@ -1,0 +1,36 @@
+server {
+    listen ${PORT};
+    server_name localhost;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Proxy API requests to the backend
+    location /api/ {
+        proxy_pass ${BACKEND_URL}/api/;
+        proxy_ssl_server_name on;
+        proxy_set_header Host $proxy_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /chat {
+        proxy_pass ${BACKEND_URL}/chat;
+        proxy_ssl_server_name on;
+        proxy_set_header Host $proxy_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /download/ {
+        proxy_pass ${BACKEND_URL}/download/;
+        proxy_ssl_server_name on;
+        proxy_set_header Host $proxy_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}

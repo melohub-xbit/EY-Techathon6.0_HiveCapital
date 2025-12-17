@@ -1,0 +1,29 @@
+steps:
+  # ==========================================
+  # BACKEND BUILD & DEPLOY
+  # ==========================================
+  # 1. Build Backend Image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/backend', './backend']
+    id: 'Build Backend'
+
+  # 2. Push Backend Image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/backend']
+    id: 'Push Backend'
+
+  # 3. Deploy Backend to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: '/bin/bash'
+    args:
+      - '-c'
+      - |
+        gcloud run deploy backend \
+          --image gcr.io/$PROJECT_ID/backend \
+          --region asia-south1 \
+          --platform managed \
+          --allow-unauthenticated
+    id: 'Deploy Backend'
+
+images:
+  - 'gcr.io/$PROJECT_ID/backend'
