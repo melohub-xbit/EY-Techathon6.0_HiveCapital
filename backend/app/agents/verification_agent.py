@@ -66,7 +66,9 @@ class VerificationAgent:
                     # Let's keep it simple: any phone number not in DB -> treat as new -> ask Name -> ask PAN.
             
             else:
-                return "To proceed, I need to verify your identity. Please share your registered Mobile Number."
+                if "new" in user_message.lower():
+                     return "Welcome! To set up your new account and proceed with the application, please share your mobile number."
+                return "To proceed, I need to verify your identity. Please share your Mobile Number."
         
         elif not state.name:
             # If phone was known but not in DB, we end up here (conceptually, though logic above handles it partially)
@@ -77,17 +79,17 @@ class VerificationAgent:
         elif not state.kyc_verified:
             # We have phone and name, need PAN or checking PAN
             prompt = f"""
-            Extract the 10-character alphanumeric PAN number from this message: "{user_message}".
-            If found, return ONLY the PAN number (e.g. ABCDE1234F).
+            Extract the 10-character alphanumeric PAN number/ID from this message: "{user_message}".
+            It allows any combination of letters and numbers (10 chars).
+            If found, return ONLY the ID.
             If not found, return EXACTLY "NOT_FOUND".
             """
             pan = generate_text(prompt).strip().upper()
             
             print(f"[VerificationAgent] User Message: '{user_message}' | Extracted PAN: '{pan}'")
             
-            # Basic validation: PAN is 10 chars. LLM might output "PAN: ABCDE1234F", so we check containment or length.
-            # Extract just the alphanumeric portion that looks like a PAN
-            pan_match = re.search(r'[A-Z]{5}[0-9]{4}[A-Z]', pan)
+            # Relaxed validation for demo: Any 10 alphanumeric characters
+            pan_match = re.search(r'[A-Z0-9]{10}', pan)
             if pan_match:
                 pan = pan_match.group(0)
             

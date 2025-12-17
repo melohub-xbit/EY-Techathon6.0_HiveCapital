@@ -75,12 +75,18 @@ class SalesAgent:
         Task:
         1. Extract loan amount and tenure if mentioned.
         2. IF Pre-approved Offer exists:
-           - Emphasize it.
-           - If user agrees to it/accepts it, output <ACTION:AGREE> and set amount to max allowed.
+           - Emphasize it initially.
+           - CRITICAL: If the user EXPLICITLY REJECTS the pre-approved amount or INSISTS on a higher amount (e.g., "go with 2 lakhs", "proceed with application for 2 lakhs"), ACCEPT their request.
+           - In that case, output <ACTION:AGREE> and set "amount" to the USER'S requested value (not the pre-approved one). 
+           - Do not keep pushing the pre-approved offer if they've already said "proceed" with the higher amount.
         3. If no offer, just negotiate standard terms.
         4. If user agrees to proceed/apply, output tag <ACTION:AGREE>.
         5. If user has questions, answer them based on product rules.
         6. Be persuasive but polite.
+        7. EDGE CASE: If the user says they are a "New Customer" or don't have a registered number:
+           - Acknowledge it warmly.
+           - STOP asking for the phone number.
+           - Immediately ask for their desired loan amount and tenure.
         
         Output Format (JSON-like for system parsing at end, but natural language first):
         [Natural Language Response]

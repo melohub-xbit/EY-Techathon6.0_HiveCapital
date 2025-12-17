@@ -30,8 +30,8 @@ class SanctionAgent:
         ┌─────────────────────────────────────────────────────────────┐
         │                      LOAN DETAILS                          │
         ├─────────────────────────────────────────────────────────────┤
-        │  Sanctioned Amount    :  ₹ {state.loan_amount:,.2f}                      
-        │  Loan Tenure          :  {state.loan_tenure} Months                          
+        │  Sanctioned Amount    :  ₹ {(state.loan_amount or 0):,.2f}                      
+        │  Loan Tenure          :  {state.loan_tenure or 12} Months                          
         │  Interest Rate        :  {state.interest_rate or 10.99}% per annum              
         │  Processing Fee       :  ₹ {(state.loan_amount or 0) * 0.01:,.2f} (1%)                   
         └─────────────────────────────────────────────────────────────┘
@@ -65,7 +65,7 @@ class SanctionAgent:
         download_url = f"/download/{filename}"
         state.sanction_letter_url = download_url
             
-        response_text = f"🎉 Congratulations {state.name}! Your Personal Loan of ₹{state.loan_amount:,.2f} has been officially sanctioned!\n\n"
+        response_text = f"🎉 Congratulations {state.name}! Your Personal Loan of ₹{(state.loan_amount or 0):,.2f} has been officially sanctioned!\n\n"
         response_text += "Your Sanction Letter has been generated and will be downloaded automatically.\n\n"
         response_text += "Thank you for choosing Hive Capital! 🙏"
         

@@ -57,6 +57,12 @@ class UnderwritingAgent:
         # 3. Decision Logic
         loan_amt = state.loan_amount or 0.0
         
+        # Rule -1: Missing Amount Check
+        if loan_amt <= 0:
+            state.current_agent = AgentRole.SALES
+            manager.save_state(state)
+            return "Could you please verify the loan amount you are looking for?"
+
         # Rule 0: PRE-APPROVED OVERRIDE
         # If the state already has a pre-approved limit (verified by Sales/System), we trust it.
         # This prevents the issue where the agent re-calculates/rejects a valid offer.
