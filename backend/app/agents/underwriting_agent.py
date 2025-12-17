@@ -57,6 +57,19 @@ class UnderwritingAgent:
         # 3. Decision Logic
         loan_amt = state.loan_amount or 0.0
         
+        # Rule 0: PRE-APPROVED OVERRIDE
+        # If the state already has a pre-approved limit (verified by Sales/System), we trust it.
+        # This prevents the issue where the agent re-calculates/rejects a valid offer.
+        if state.pre_approved_limit and state.pre_approved_limit > 0:
+            if loan_amt <= state.pre_approved_limit:
+                 # AUTO APPROVE based on pre-qualification
+                 state.is_approved = True
+                 state.current_agent = AgentRole.SANCTION
+                 response_text = f"Excellent! Since you have a pre-approved offer, I am fast-tracking your approval for ₹{loan_amt:,.0f}."
+                 response_text += "\n\n(System: Generating Sanction Letter...)"
+                 manager.save_state(state)
+                 return response_text
+
         # Rule 1: Credit Score Floor
         if score < 700:
             state.is_approved = False
@@ -68,17 +81,20 @@ class UnderwritingAgent:
             manager.save_state(state)
             return response_text
 
-        # Rule 2: Amount Limits
+        # Rule 2: Amount Limits (Dynamic if no hard pre-approval found earlier)
         if loan_amt == 0:
              # Should not happen if Sales did job, but robust handling
              loan_amt = 100000.0 # Default fallback
              state.loan_amount = loan_amt
-
+        
+        # Recalculate dynamic limit if we didn't hit the override
+        # Use the limit we calculated in Step 2 logic
+        
         if loan_amt <= pre_approved_limit:
             # INSTANT APPROVAL
             state.is_approved = True
             state.current_agent = AgentRole.SANCTION
-            response_text = f"Great news! Your loan application for ₹{loan_amt} is approved based on your pre-qualified offer."
+            response_text = f"Great news! Your loan application for ₹{loan_amt} is approved based on your credit profile."
             response_text += "\n\n(System: Generating Sanction Letter...)"
 
         elif loan_amt <= (2 * pre_approved_limit):

@@ -113,5 +113,15 @@ class MockDataManager:
     def get_offer(self, customer_id: str):
         return self.offers.get(customer_id)
 
+    def get_customer_by_phone(self, phone: str):
+        # Normalize phone input (basic)
+        phone_clean = phone.replace(" ", "").replace("-", "")[-10:]
+        
+        for customer in self.customers:
+            c_phone = customer["phone"].replace(" ", "").replace("-", "")[-10:]
+            if c_phone == phone_clean:
+                return customer
+        return None
+
 # Singleton instance
 mock_db = MockDataManager()

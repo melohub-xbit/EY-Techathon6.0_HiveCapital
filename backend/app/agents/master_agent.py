@@ -90,6 +90,8 @@ class MasterAgent:
         You are the Master Agent for Hive Capital Personal Loans.
         Your goal is to warmly greet the customer and identify if they are interested in a Personal Loan.
         
+        Client Name: {state.name if state.name else 'Customer'}
+        
         Current Conversation History:
         {[m['content'] for m in state.conversation_history[-5:]]}
         
