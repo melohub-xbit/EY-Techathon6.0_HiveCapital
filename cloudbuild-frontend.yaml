@@ -19,24 +19,33 @@ steps:
     args:
       - '-c'
       - |
+        echo "DEBUG: Starting deployment script."
+        
+        # Lists services to ensure we can see them
+        echo "DEBUG: Listing services in asia-south1..."
+        gcloud run services list --platform managed --region asia-south1
+        
         # Try to fetch existing backend URL
         echo "Fetching Backend Service URL..."
-        BACKEND_URL=$(gcloud run services describe backend --region asia-south1 --format 'value(status.url)' 2>/dev/null)
+        # Removed 2>/dev/null to see errors
+        BACKEND_URL=$$(gcloud run services describe backend --platform managed --region asia-south1 --format 'value(status.url)')
         
-        if [ -z "$BACKEND_URL" ]; then
+        echo "DEBUG: Raw BACKEND_URL value: '$$BACKEND_URL'"
+        
+        if [ -z "$$BACKEND_URL" ]; then
           echo "Error: Could not find service 'backend' in region asia-south1."
           echo "Please ensure the backend is deployed first."
           exit 1
         fi
         
-        echo "Found Backend URL: $BACKEND_URL"
+        echo "Found Backend URL: $$BACKEND_URL"
         
         gcloud run deploy frontend \
           --image gcr.io/$PROJECT_ID/frontend \
           --region asia-south1 \
           --platform managed \
           --allow-unauthenticated \
-          --set-env-vars BACKEND_URL=$BACKEND_URL
+          --set-env-vars BACKEND_URL=$$BACKEND_URL
     id: 'Deploy Frontend'
 
 images:
