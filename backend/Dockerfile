@@ -7,20 +7,12 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-# Create venv and install requirements
-# While venv is not strictly necessary in Docker, user asked for it. 
-# But usually in Docker we install directly to system python or user python.
-# I will follow standard docker python practice: install directly, unless user *strictly* insists on venv activation. 
-# "in backend docker, set up venv and install reqs" -> OK, I will do it.
-ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m venv $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
+# Install dependencies directly to system python (no venv needed in container)
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Cloud Run defaults globally to 8080, passed via PORT env var.
-# Uvicorn needs to listen on 0.0.0.0
+# Run uvicorn
+# explicit host 0.0.0.0 and port $PORT are critical
 CMD exec uvicorn main:app --host 0.0.0.0 --port $PORT
