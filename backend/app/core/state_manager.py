@@ -2,36 +2,19 @@ import json
 import os
 from app.models.session import LoanApplicationState, AgentRole
 
-# In-memory store for quick access
-# In a real app, this would be Redis/Postgres.
-# For this prototype, we'll back it with a JSON file.
-
-STATE_FILE = "session_store.json"
+# In-memory store for Cloud Run
+# Since Cloud Run is stateless, this data resets on restart.
+# For production, use Firestore, Redis, or a SQL DB.
+GLOBAL_STATE_STORE = {}
 
 class StateManager:
     def __init__(self):
-        self._ensure_file()
-
-    def _ensure_file(self):
-        if not os.path.exists(STATE_FILE):
-             with open(STATE_FILE, "w") as f:
-                 json.dump({}, f)
-
-    def _load_all(self):
-        try:
-            with open(STATE_FILE, "r") as f:
-                return json.load(f)
-        except:
-            return {}
-
-    def _save_all(self, data):
-        with open(STATE_FILE, "w") as f:
-            json.dump(data, f, indent=2)
+        pass
 
     def get_state(self, session_id: str) -> LoanApplicationState:
-        all_data = self._load_all()
-        if session_id in all_data:
-            return LoanApplicationState(**all_data[session_id])
+        if session_id in GLOBAL_STATE_STORE:
+            # Return a copy or re-instantiate to avoid direct mutable reference issues if needed
+            return LoanApplicationState(**GLOBAL_STATE_STORE[session_id])
         return self.create_session(session_id)
 
     def create_session(self, session_id: str, user_id: str = "guest") -> LoanApplicationState:
@@ -43,10 +26,11 @@ class StateManager:
         return new_state
 
     def save_state(self, state: LoanApplicationState):
-        all_data = self._load_all()
-        # Custom encoder usage by converting to dict first using pydantic
-        all_data[state.session_id] = json.loads(state.json())
-        self._save_all(all_data)
+        try:
+             # Store as dict to simulate serialization and ensure clean state
+            GLOBAL_STATE_STORE[state.session_id] = json.loads(state.json())
+        except Exception as e:
+            print(f"Error saving state: {e}")
 
     def update_agent(self, session_id: str, new_agent: AgentRole):
         state = self.get_state(session_id)
